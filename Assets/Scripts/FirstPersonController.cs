@@ -26,7 +26,7 @@ public class FirstPersonController : MonoBehaviour
     {
         float x = Input.GetAxis("Mouse X") * mouseSensitivity;
         float y = Input.GetAxis("Mouse Y") * mouseSensitivity;
-        if(Mathf.Abs(x) > 0.3f || Mathf.Abs(y) > 0.3f) swingHead.Invoke(x, y);
+        if(Mathf.Abs(y) > 0.3f) swingHead.Invoke(x, y);
 
         cameraVerticalRotation -= y;
         cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -90f, 90f);
