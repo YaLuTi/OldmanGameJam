@@ -96,7 +96,7 @@ public class MoteableObject : MonoBehaviour
             if(yDynamic < 0)
             {
                 wantToSwing += Mathf.Abs(yDynamic);
-                if(wantToSwing > 30) isSwing = true;
+                if(wantToSwing > 40) isSwing = true;
             }
         }
         else
@@ -161,5 +161,6 @@ public class MoteableObject : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         Debug.Log(collision.gameObject.name);
+        cameraVibration.ShakeCamera();
     }
 }
