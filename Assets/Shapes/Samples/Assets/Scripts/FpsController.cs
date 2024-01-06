@@ -70,11 +70,11 @@ namespace Shapes {
 				Draw.Matrix = crosshairTransform.localToWorldMatrix; // draw it in the space of crosshairTransform
 				Draw.BlendMode = ShapesBlendMode.Transparent;
 				Draw.LineGeometry = LineGeometry.Flat2D;
-				crosshair.DrawCrosshair();
+				// crosshair.DrawCrosshair();
 				float radiusPunched = ammoBarRadius + fireSidebarRadiusPunchAmount * crosshair.fireDecayer.value;
-				ammoBar.DrawBar( this, radiusPunched );
+				// ammoBar.DrawBar( this, radiusPunched );
 				chargeBar.DrawBar( this, radiusPunched );
-				compass.DrawCompass( head.transform.forward );
+				// compass.DrawCompass( head.transform.forward );
 			}
 		}
 

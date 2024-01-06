@@ -1,3 +1,4 @@
+using Shapes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -11,9 +12,13 @@ public class FirstPersonController : MonoBehaviour
     float xSpeed, ySpeed;
     [SerializeField]
     float mouseSensitivity;
-
     float cameraVerticalRotation;
+
     public UnityEvent<float, float> swingHead = new UnityEvent<float, float>();
+
+    MoteableObject nowHighLight;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -24,14 +29,47 @@ public class FirstPersonController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        MoveHead();
+        SeeObject();
+    }
+
+    void MoveHead()
+    {
         float x = Input.GetAxis("Mouse X") * mouseSensitivity;
         float y = Input.GetAxis("Mouse Y") * mouseSensitivity;
-        if(Mathf.Abs(y) > 0.3f) swingHead.Invoke(x, y);
 
         cameraVerticalRotation -= y;
+        if (Mathf.Abs(cameraVerticalRotation) > 15f || Mathf.Abs(y) > 0.4f) swingHead.Invoke(y, cameraVerticalRotation);
         cameraVerticalRotation = Mathf.Clamp(cameraVerticalRotation, -90f, 90f);
         this.transform.localEulerAngles = Vector3.right * cameraVerticalRotation;
 
         player.Rotate(Vector3.up * x);
+    }
+
+    private void SeeObject()
+    {
+        Vector3 mousePosition = Input.mousePosition;
+        Ray ray = Camera.main.ScreenPointToRay(mousePosition);
+
+        RaycastHit hit;
+
+        if (Physics.Raycast(ray, out hit))
+        {
+            MoteableObject moteableObject;
+            if(hit.transform.root.TryGetComponent<MoteableObject>(out moteableObject))
+            {
+                moteableObject.HighLight(true);
+                nowHighLight = moteableObject;
+                if (Input.GetButtonDown("Fire1"))
+                {
+                    nowHighLight.Holded(this.transform);
+                }
+            }
+        }
+        else
+        {
+            if (nowHighLight == null) return;
+            nowHighLight.HighLight(false);
+        }
     }
 }

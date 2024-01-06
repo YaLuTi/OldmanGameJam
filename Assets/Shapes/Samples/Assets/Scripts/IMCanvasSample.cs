@@ -11,7 +11,7 @@ namespace Shapes {
 
 			// Draw a large ring, fitting it both horizontally and vertically:
 			float radius = ( Mathf.Min( rect.width, rect.height ) / 2 ) * 0.9f;
-			Draw.Ring( Vector3.zero, Quaternion.identity, radius, thickness: 1, new Color( 1, 1, 1, 0.3f ) );
+			// Draw.Ring( Vector3.zero, Quaternion.identity, radius, thickness: 1, new Color( 1, 1, 1, 0.3f ) );
 
 			// Draw a rounded border around the whole screen:
 			Draw.RectangleBorder( rect, 8f, cornerRadius: 16, Color.white );
@@ -21,11 +21,11 @@ namespace Shapes {
 			base.DrawPanels();
 
 			// Draw a crosshair in the middle
-			Draw.Disc( Vector3.zero, 4f );
-			Vector2 a = new Vector2( 14, 0 );
-			Vector2 b = new Vector2( 28, 0 );
+			Draw.Disc( Vector3.zero, 2f );
+			Vector2 a = new Vector2( 7, 0 );
+			Vector2 b = new Vector2( 14, 0 );
 			for( int i = 0; i < 4; i++ ) {
-				Draw.Line( a, b, 4f, LineEndCap.Round );
+				Draw.Line( a, b, 2f, LineEndCap.Round );
 				a = ShapesMath.Rotate90CCW( a );
 				b = ShapesMath.Rotate90CCW( b );
 			}
