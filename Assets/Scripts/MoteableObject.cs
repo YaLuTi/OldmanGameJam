@@ -75,23 +75,25 @@ public class MoteableObject : MonoBehaviour
     {
         timeout = 0;
 
-        y = MapValue(y, -35, 10, -3f, 3f);
-
-        float rotateY = y * 25;
-
-
-        VerticalRotation = rotateY;
-        VerticalRotation = Mathf.Clamp(VerticalRotation, -70f, 85f);
 
 
         if (!isSwing)
         {
+            y = MapValue(y, -35, 40, -3f, 3f);
+
+            float rotateY = y * 25;
+
+
+            VerticalRotation = rotateY;
+            VerticalRotation = Mathf.Clamp(VerticalRotation, -70f, 85f);
+
+                NowPower = power;
+                NowPower = Mathf.Min(Mathf.Abs(NowPower), 10);
+
             if(y < -1f)
             {
                 var addPower = Mathf.Min((Math.Abs(y)), 2.5f);
                 power += y / 30f;
-                NowPower = power;
-                NowPower = Mathf.Min(Mathf.Abs(NowPower), 10);
             }
             if(yDynamic < 0)
             {
@@ -101,8 +103,19 @@ public class MoteableObject : MonoBehaviour
         }
         else
         {
-            NowPower = power;
-            power = 0;
+            y = MapValue(y, -35, 10, -3f, 3f);
+
+            float rotateY = y * 25;
+
+
+            VerticalRotation = rotateY;
+            VerticalRotation = Mathf.Clamp(VerticalRotation, -70f, 85f);
+            if(power != 0)
+            {
+                NowPower = power;
+                NowPower = Mathf.Min(Mathf.Abs(NowPower), 10);
+                power = 0;
+            }
             if (yDynamic > 0)
             {
                 wantToCharge += Mathf.Abs(yDynamic);
@@ -160,7 +173,13 @@ public class MoteableObject : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        Debug.Log(collision.gameObject.name);
-        cameraVibration.ShakeCamera();
+        if(isSwing)
+        {
+            
+            Debug.Log(collision.gameObject.name);
+            cameraVibration.ShakeCamera();
+            collision.transform.GetComponentInParent<BananaAnimatorPlayer>().Hit(0.2f * (NowPower / 6.5f));
+            NowPower *= 0.8f;
+        }
     }
 }
