@@ -20,6 +20,7 @@ public class BananaObject : MonoBehaviour
     void Start()
     {
         bananas = GetComponentsInChildren<BananaAnimatorPlayer>();
+        transform.DOMoveY(0.6f, 0.3f);
         // transform.localScale = Vector3.zero;
         // transform.DOScale(new Vector3(0.1f, 0.1f, 0.1f), 0.25f);
         // transform.DORotate(new Vector3(0, 270, 0), 0.4f);
