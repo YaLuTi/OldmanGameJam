@@ -31,6 +31,12 @@ public class MoteableObject : MonoBehaviour
 
     bool isHold = false;
 
+    [SerializeField]
+    AudioSource hammerAudio;
+
+    [SerializeField]
+    GameObject[] particals;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -44,9 +50,10 @@ public class MoteableObject : MonoBehaviour
     {
         if (!isHold) return;
 
+        particalCooldown -= Time.deltaTime;
         PlayerState.charge = NowPower;
 
-        if (timeout > 0.4f)
+        if (timeout > 0.3f)
         {
             VerticalRotation = 0;
             power = 0;
@@ -103,7 +110,7 @@ public class MoteableObject : MonoBehaviour
         }
         else
         {
-            y = MapValue(y, -35, 10, -3f, 3f);
+            y = MapValue(y, -25, 10, -3f, 3f);
 
             float rotateY = y * 25;
 
@@ -175,11 +182,20 @@ public class MoteableObject : MonoBehaviour
     {
         if(isSwing)
         {
-            
-            Debug.Log(collision.gameObject.name);
+            hammerAudio.pitch = UnityEngine.Random.Range(0.7f, 1.2f);
+            SpawnPartical(collision.contacts[0].point);
+            hammerAudio.Play();
             cameraVibration.ShakeCamera();
-            collision.transform.GetComponentInParent<BananaAnimatorPlayer>().Hit(0.2f * (NowPower / 6.5f));
+            if(!collision.transform.GetComponentInParent<BananaAnimatorPlayer>().Hit(0.2f * (NowPower / 6.5f))) return;
             NowPower *= 0.8f;
         }
+    }
+
+    float particalCooldown;
+    void SpawnPartical(Vector3 p)
+    {
+        if(particalCooldown > 0.1f) return;
+        Destroy(Instantiate(particals[UnityEngine.Random.Range(0, 2)], p, Quaternion.identity), 2.5f);
+        particalCooldown = 0.15f;
     }
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class FirstPersonController : MonoBehaviour
 {
@@ -31,6 +32,8 @@ public class FirstPersonController : MonoBehaviour
     {
         MoveHead();
         SeeObject();
+
+        if(Input.GetKeyDown(KeyCode.P)) SceneManager.LoadScene(0, LoadSceneMode.Single);
     }
 
     void MoveHead()
@@ -62,6 +65,9 @@ public class FirstPersonController : MonoBehaviour
                 nowHighLight = moteableObject;
                 if (Input.GetButtonDown("Fire1"))
                 {
+                    MusicSystem.PlayBGM();
+                    StageSystem.instance.Spawn();
+                    CountDownSystem.SetCount(true);
                     nowHighLight.Holded(this.transform);
                 }
             }
