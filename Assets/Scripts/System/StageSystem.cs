@@ -30,7 +30,7 @@ public class StageSystem : MonoBehaviour
         {
             CountDownSystem.SetCount(false);
         }
-        Instantiate(gameObjects[count], spawnPoint.position, Quaternion.identity);
+        Instantiate(gameObjects[count], spawnPoint.position, Quaternion.Euler(new Vector3(0, 270, 0)));
         count++;
     }
 }

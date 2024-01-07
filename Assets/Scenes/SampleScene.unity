@@ -1269,6 +1269,10 @@ PrefabInstance:
       value: redHammer
       objectReference: {fileID: 0}
     - target: {fileID: 33055572910454436, guid: 9eb522897b0432749a0e273fc7aa23d4, type: 3}
+      propertyPath: isSwing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33055572910454436, guid: 9eb522897b0432749a0e273fc7aa23d4, type: 3}
       propertyPath: holdPos.x
       value: 2.05
       objectReference: {fileID: 0}

@@ -86,9 +86,9 @@ public class MoteableObject : MonoBehaviour
 
         if (!isSwing)
         {
-            y = MapValue(y, -35, 40, -3f, 3f);
+            y = MapValue(y, -35f, 40f, -3f, 3f);
 
-            float rotateY = y * 25;
+            float rotateY = y * 25f;
 
 
             VerticalRotation = rotateY;
@@ -100,7 +100,7 @@ public class MoteableObject : MonoBehaviour
             if(y < -1f)
             {
                 var addPower = Mathf.Min((Math.Abs(y)), 2.5f);
-                power += y / 30f;
+                power += y * Time.deltaTime * 4;
             }
             if(yDynamic < 0)
             {
@@ -130,7 +130,7 @@ public class MoteableObject : MonoBehaviour
             }
         }
 
-        transform.DOLocalRotate(defaultRotate + new Vector3(0, 0, VerticalRotation), 0.1f);
+        transform.eulerAngles = (defaultRotate + new Vector3(0, 0, VerticalRotation));
 
     }
 
